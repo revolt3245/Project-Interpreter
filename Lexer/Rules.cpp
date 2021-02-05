@@ -10,3 +10,8 @@ std::map<TokenType, std::regex> regex_map(std::vector<std::regex> regex) {
 	}
 	return res;
 }
+
+std::multimap<UnionType, std::vector<UnionType>> reduction_map(std::vector<std::pair<UnionType, std::vector<UnionType>>>) {
+	std::multimap<UnionType, std::vector<UnionType>> res;
+	return res;
+}
