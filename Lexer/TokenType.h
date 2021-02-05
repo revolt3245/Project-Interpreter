@@ -3,10 +3,10 @@
 
 enum class TokenType {
 	BEGIN,
-	NUM = BEGIN,
-	VAR,
-	PLUS,
+	PLUS = BEGIN,
 	MULTIPLY,
+	NUM,
+	VAR,
 	eof
 };
 

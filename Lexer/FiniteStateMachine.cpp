@@ -26,15 +26,17 @@ void FiniteStateMachine::initialize() {
 //Step
 bool FiniteStateMachine::step(std::string& c, Token& output) {
 	std::smatch m;
+	if (c.size() == 0) {
+		output.setType(TokenType::eof);
+		output.setValue("");
+		return true;
+	}
 
 	for (TokenType i = TokenType::BEGIN; i != TokenType::eof; ++i) {
 		std::regex_search(c, m, Rules[i]);
-		
-		std::cout << i << std::endl;
 		auto mstr = m.str();
 		auto msize = mstr.size();
 
-		std::cout << msize << std::endl;
 		if (msize > 0) {
 			output.setType(i);
 			output.setValue(mstr);
@@ -42,6 +44,6 @@ bool FiniteStateMachine::step(std::string& c, Token& output) {
 			return true;
 		}
 	}
-	c.substr(1);
+	c = c.substr(1);
 	return false;
 }
