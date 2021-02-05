@@ -5,6 +5,8 @@ enum class TokenType {
 	BEGIN,
 	PLUS = BEGIN,
 	MULTIPLY,
+	LPAREN,
+	RPAREN,
 	NUM,
 	VAR,
 	eof

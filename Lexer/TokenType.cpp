@@ -23,6 +23,12 @@ std::ostream& operator<<(std::ostream& os, const TokenType& obj) {
 	case TokenType::MULTIPLY:
 		os << "MULTIPLY";
 		break;
+	case TokenType::LPAREN:
+		os << "LPAREN";
+		break;
+	case TokenType::RPAREN:
+		os << "RPAREN";
+		break;
 	case TokenType::eof:
 		os << "EOF";
 		break;
