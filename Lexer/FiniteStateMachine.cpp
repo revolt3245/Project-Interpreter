@@ -1,9 +1,6 @@
 #include "FiniteStateMachine.h"
 
 //getter
-std::vector<TokenType> FiniteStateMachine::getState() {
-	return this->State;
-}
 std::map<TokenType, std::regex> FiniteStateMachine::getRules() {
 	return this->Rules;
 }
@@ -13,14 +10,6 @@ void FiniteStateMachine::set_Rules(std::map<TokenType, std::regex> sRules) {
 }
 void FiniteStateMachine::set_Rules(std::vector<std::regex> sRegex) {
 	this->Rules = regex_map(sRegex);
-}
-
-//initializer
-void FiniteStateMachine::initialize() {
-	this->State = std::vector<TokenType>(0);
-	for (TokenType i = TokenType::BEGIN; i != TokenType::eof; ++i) {
-		this->State.push_back(i);
-	}
 }
 
 //Step

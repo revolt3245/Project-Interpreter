@@ -21,7 +21,7 @@ std::ostream& operator<<(std::ostream& os, const TokenType& obj) {
 		os << "PLUS";
 		break;
 	case TokenType::MULTIPLY:
-		os << "MULTIPLY";
+		os << "MULT";
 		break;
 	case TokenType::LPAREN:
 		os << "LPAREN";
