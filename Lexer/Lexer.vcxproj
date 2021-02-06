@@ -146,10 +146,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NonterminalType.cpp" />
     <ClCompile Include="PushdownAutomata.cpp" />
+    <ClCompile Include="PushdownCommand.cpp" />
     <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="TokenType.cpp" />
     <ClCompile Include="Union.cpp" />
+    <ClCompile Include="UnionReduction.cpp" />
     <ClCompile Include="UnionType.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
@@ -160,10 +162,12 @@
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="NonterminalType.h" />
     <ClInclude Include="PushdownAutomata.h" />
+    <ClInclude Include="PushdownCommand.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenType.h" />
     <ClInclude Include="Union.h" />
+    <ClInclude Include="UnionReduction.h" />
     <ClInclude Include="UnionType.h" />
     <ClInclude Include="VirtualMachine.h" />
   </ItemGroup>

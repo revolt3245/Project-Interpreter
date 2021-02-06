@@ -3,19 +3,19 @@
 UnionType Union::getType() {
 	return this->Type;
 }
-std::string Union::getValue() {
+AbstractSyntaxTree Union::getValue() {
 	return this->Value;
 }
 //setter
 void Union::setType(UnionType sType) {
 	this->Type = sType;
 }
-void Union::setValue(std::string sValue) {
+void Union::setValue(AbstractSyntaxTree sValue) {
 	this->Value = sValue;
 }
 
 //print
 std::ostream& operator<<(std::ostream& os, const Union& obj) {
-	os << obj.Type << " " << obj.Value;
+	os << obj.Type;
 	return os;
 }

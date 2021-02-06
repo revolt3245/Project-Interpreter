@@ -8,6 +8,7 @@
 #include "Initialize.h"
 #include "UnionType.h"
 #include "AbstractSyntaxTree.h"
+#include "UnionReduction.h"
 
 int main() {
 	//std::string test = "a123*(123 + b23)";
@@ -19,13 +20,8 @@ int main() {
 	//vm.run();
 	//vm.scopeTokenBuffer();
 
-	AbstractSyntaxTree n1(Token(TokenType::NUM, "123"));
-	AbstractSyntaxTree n2(Token(TokenType::VAR, "a123"));
-	AbstractSyntaxTree n3(Token(TokenType::MULTIPLY, "*"), &n2, &n1);
-	AbstractSyntaxTree n4(Token(TokenType::NUM, "23"));
-	AbstractSyntaxTree n5(Token(TokenType::PLUS, "+"), &n4, &n3);
+	UnionReduction r = { {Union(), Union(), Union()}, [](std::vector<Union> s1) {return s1[0].getValue(); } };
 
-	std::cout << n5 << std::endl;
-
+	r.ReductionAction(r.ReductionRule);
 	return 0;
 }

@@ -24,7 +24,10 @@ public:
 
 	void getType(UnionType_raw& gtype, bool& isTerminal);
 
-	friend std::ostream& operator<<(std::ostream& os, UnionType& obj);
+	friend std::ostream& operator<<(std::ostream& os, const UnionType& obj);
+	friend bool operator==(const UnionType& obj1, const UnionType& obj2);
+	friend bool operator<(const UnionType& obj1, const UnionType& obj2);
+	friend bool operator>(const UnionType& obj1, const UnionType& obj2);
 private:
 	union UnionType_raw type;
 	bool isTerminal;
