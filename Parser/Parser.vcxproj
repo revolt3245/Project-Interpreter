@@ -139,14 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AST.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nonterminal.cpp" />
+    <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="UnionToken.cpp" />
     <ClCompile Include="UnionType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AST.h" />
     <ClInclude Include="Nonterminal.h" />
+    <ClInclude Include="Rules.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="UnionToken.h" />
     <ClInclude Include="UnionType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -40,6 +40,8 @@ public:
 
 	//Disp
 	friend std::ostream& operator<<(std::ostream& os, const Token& obj);
+
+	Token& operator=(const Token& obj);
 private:
 	TokenType Type;
 	std::string Value;

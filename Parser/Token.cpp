@@ -72,3 +72,9 @@ std::ostream& operator<<(std::ostream& os, const Token& obj) {
 	os << obj.Type << " " << obj.Value;
 	return os;
 }
+
+Token& Token::operator=(const Token& obj) {
+	this->Type = obj.Type;
+	this->Value = obj.Value;
+	return *this;
+}
