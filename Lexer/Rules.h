@@ -3,6 +3,7 @@
 #include <regex>
 #include <vector>
 #include <queue>
+#include <algorithm>
 
 #include "TokenType.h"
 #include "UnionReduction.h"
@@ -10,6 +11,6 @@
 
 std::map<TokenType, std::regex> regex_map(std::vector<std::regex>);
 
-std::multimap<UnionType, UnionReduction> reduction_map(std::vector<std::pair<UnionType, UnionReduction>>);
+std::multimap<NonterminalType, UnionReduction> reduction_map(std::vector<std::pair<NonterminalType, UnionReduction>>);
 
-std::vector<std::map<UnionType, PushdownCommand>> state_transition_map(std::multimap<UnionType, UnionReduction>);
+std::vector<std::map<NonterminalType, PushdownCommand>> state_transition_map(std::multimap<NonterminalType, UnionReduction>);

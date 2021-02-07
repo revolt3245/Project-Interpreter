@@ -20,8 +20,14 @@ int main() {
 	//vm.run();
 	//vm.scopeTokenBuffer();
 
-	UnionReduction r = { {Union(), Union(), Union()}, [](std::vector<Union> s1) {return s1[0].getValue(); } };
+	std::multimap<int, int> test;
+	test.insert({ 1,1 });
+	test.insert({ 1,2 });
+	test.insert({ 2,2 });
 
-	r.ReductionAction(r.ReductionRule);
+	for (auto i = test.lower_bound(1); i != test.upper_bound(1); i++) {
+		std::cout << (*i).second << std::endl;
+	}
+
 	return 0;
 }
