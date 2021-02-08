@@ -16,7 +16,6 @@ int main() {
 	auto r_map = ReduceMap(ruleVector);
 	auto m_map = ReduceMapToMarkedMap(r_map);
 	auto follow = Follow(m_map);
-	auto s1 = NextState(r_map, m_map, follow[3]);
 
 	for (auto i = m_map.begin(); i != m_map.end(); i++) {
 		std::cout << (*i).first << " : " << (*i).second << std::endl;
@@ -24,10 +23,6 @@ int main() {
 	std::cout << std::endl;
 	for (auto i : follow) {
 		std::cout << i << std::endl;
-	}
-	std::cout << std::endl;
-	for (auto i = s1.begin(); i != s1.end(); i++) {
-		std::cout << (*i).first << " : " << (*i).second << std::endl;
 	}
 	return 0;
 }
