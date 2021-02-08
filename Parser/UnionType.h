@@ -13,7 +13,7 @@ public:
 	UnionType(NonterminalType nt) { setType(nt); };
 
 	//Destructor
-	~UnionType();
+	~UnionType() {};
 
 	//Getter
 	TokenType getTypeAsTerminal();
@@ -24,7 +24,7 @@ public:
 	void setType(NonterminalType nt);
 
 	//Disp
-	friend std::ostream operator<<(std::ostream& os, const UnionType& obj);
+	friend std::ostream& operator<<(std::ostream& os, const UnionType& obj);
 
 	//Operator
 	friend UnionType operator++(const UnionType& obj);

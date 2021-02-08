@@ -32,13 +32,14 @@ void UnionType::setType(NonterminalType nt) {
 }
 
 //Disp
-std::ostream operator<<(std::ostream& os, const UnionType& obj) {
+std::ostream& operator<<(std::ostream& os, const UnionType& obj) {
 	if (obj.isTerminal) {
 		os << obj.Type.tt;
 	}
 	else {
 		os << obj.Type.nt;
 	}
+	return os;
 }
 
 //Operator

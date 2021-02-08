@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include "UnionType.h"
@@ -11,4 +12,10 @@ struct UnionReduction {
 	AST(*ReductionAction)(std::vector<UnionToken> token);
 };
 
+std::ostream& operator<<(std::ostream& os, const UnionReduction& obj);
+bool operator==(const UnionReduction& obj1, const UnionReduction& obj2);
+
 typedef std::pair<UnionReduction, int> MarkedReduction;
+
+std::ostream& operator<<(std::ostream& os, const MarkedReduction& obj);
+bool operator==(const MarkedReduction& obj1, const MarkedReduction& obj2);

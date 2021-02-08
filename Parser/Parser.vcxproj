@@ -144,12 +144,14 @@
     <ClCompile Include="Nonterminal.cpp" />
     <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="UnionReduction.cpp" />
     <ClCompile Include="UnionToken.cpp" />
     <ClCompile Include="UnionType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AST.h" />
     <ClInclude Include="Nonterminal.h" />
+    <ClInclude Include="PushdownCommand.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="UnionReduction.h" />
