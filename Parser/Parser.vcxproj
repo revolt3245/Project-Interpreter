@@ -152,6 +152,7 @@
     <ClInclude Include="Nonterminal.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="UnionReduction.h" />
     <ClInclude Include="UnionToken.h" />
     <ClInclude Include="UnionType.h" />
   </ItemGroup>

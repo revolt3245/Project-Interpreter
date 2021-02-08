@@ -34,6 +34,14 @@ public:
 	friend bool operator<=(const UnionType& obj1, const UnionType& obj2);
 	friend bool operator>=(const UnionType& obj1, const UnionType& obj2);
 
+	friend bool operator==(const UnionType& obj1, const UnionType& obj2);
+	friend bool operator==(const UnionType& obj1, const TokenType& obj2);
+	friend bool operator==(const UnionType& obj1, const NonterminalType& obj2);
+
+	friend bool operator!=(const UnionType& obj1, const UnionType& obj2);
+	friend bool operator!=(const UnionType& obj1, const TokenType& obj2);
+	friend bool operator!=(const UnionType& obj1, const NonterminalType& obj2);
+
 	UnionType& operator=(const TokenType& tt);
 	UnionType& operator=(const NonterminalType& nt);
 	UnionType& operator=(const UnionType& ut);

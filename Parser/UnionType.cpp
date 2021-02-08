@@ -126,3 +126,63 @@ UnionType& UnionType::operator=(const UnionType& ut) {
 	}
 	return *this;
 }
+
+bool operator==(const UnionType& obj1, const UnionType& obj2) {
+	if (obj1.isTerminal ^ obj2.isTerminal) {
+		return false;
+	}
+	else {
+		if (obj1.isTerminal) {
+			return obj1.Type.tt == obj2.Type.tt;
+		}
+		else {
+			return obj1.Type.nt == obj2.Type.nt;
+		}
+	}
+}
+bool operator==(const UnionType& obj1, const TokenType& obj2) {
+	if (obj1.isTerminal) {
+		return obj1.Type.tt == obj2;
+	}
+	else {
+		return false;
+	}
+}
+bool operator==(const UnionType& obj1, const NonterminalType& obj2) {
+	if (!obj1.isTerminal) {
+		return obj1.Type.nt == obj2;
+	}
+	else {
+		return false;
+	}
+}
+
+bool operator!=(const UnionType& obj1, const UnionType& obj2) {
+	if (obj1.isTerminal ^ obj2.isTerminal) {
+		return true;
+	}
+	else {
+		if (obj1.isTerminal) {
+			return obj1.Type.tt != obj2.Type.tt;
+		}
+		else {
+			return obj1.Type.nt != obj2.Type.nt;
+		}
+	}
+}
+bool operator!=(const UnionType& obj1, const TokenType& obj2) {
+	if (!obj1.isTerminal) {
+		return true;
+	}
+	else {
+		return obj1.Type.tt == obj2;
+	}
+}
+bool operator!=(const UnionType& obj1, const NonterminalType& obj2) {
+	if (obj1.isTerminal) {
+		return true;
+	}
+	else {
+		return obj1.Type.nt == obj2;
+	}
+}
