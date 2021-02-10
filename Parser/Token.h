@@ -4,7 +4,9 @@
 enum class TokenType {
 	BEGIN,
 	PLUS = BEGIN,
+	MINUS,
 	MULT,
+	DIV,
 	LPAREN,
 	RPAREN,
 	NUM,

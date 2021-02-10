@@ -31,8 +31,14 @@ std::ostream& operator<<(std::ostream& os, const TokenType& tokentype) {
 	case TokenType::PLUS:
 		os << "PLUS";
 		break;
+	case TokenType::MINUS:
+		os << "MIN";
+		break;
 	case TokenType::MULT:
 		os << "MULT";
+		break;
+	case TokenType::DIV:
+		os << "DIV";
 		break;
 	case TokenType::LPAREN:
 		os << "LPN";
