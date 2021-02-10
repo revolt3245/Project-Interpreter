@@ -70,6 +70,32 @@ std::vector<UnionType> Follow(std::multimap<UnionType, MarkedReduction> markedma
 	}
 	return res;
 }
+
+std::vector<UnionType> NextToken(std::multimap<UnionType, UnionReduction> reducemap, UnionType token) {
+	std::vector<UnionType> res(0);
+	std::vector<UnionType> prescaned = { token };
+	if (token == NonterminalType::BEGIN) {
+		res.push_back(TokenType::LAST);
+	}
+	else {
+		for (auto i = reducemap.begin(); i != reducemap.end(); i++) {
+			auto rule = (*i).second.ReductionRules;
+			auto tokenIter = std::find(rule.begin(), rule.end(), token);
+			if (rule.size() > tokenIter - rule.begin() + 1 && std::find(res.begin(), res.end(), *(tokenIter + 1)) == res.end()) {
+				res.push_back(*(tokenIter + 1));
+			}
+			else if (rule.size() == tokenIter - rule.begin() + 1) {
+				auto upper_token = NextToken(reducemap, (*i).first);
+				for (auto j : upper_token) {
+					if (std::find(res.begin(), res.end(), j) == res.end()) {
+						res.push_back(j);
+					}
+				}
+			}
+		}
+	}
+	return res;
+}
 std::multimap<UnionType, MarkedReduction> NextState(std::multimap<UnionType, UnionReduction> reducemap, std::multimap<UnionType, MarkedReduction> markedmap, UnionType token) {
 	std::multimap<UnionType, MarkedReduction> resfirst;
 	std::multimap<UnionType, MarkedReduction> res;
@@ -78,9 +104,11 @@ std::multimap<UnionType, MarkedReduction> NextState(std::multimap<UnionType, Uni
 	for (auto i = markedmap.begin(); i != markedmap.end(); i++) {
 		auto rule = (*i).second.first.ReductionRules;
 		auto mark = (*i).second.second;
-		if (rule[mark] == token) {
-			MarkedReduction mr = { {rule, nullptr}, mark + 1 };
-			res.insert({ (*i).first, mr });
+		if (rule.size() > mark) {
+			if (rule[mark] == token) {
+				MarkedReduction mr = { {rule, nullptr}, mark + 1 };
+				res.insert({ (*i).first, mr });
+			}
 		}
 	}
 
@@ -107,9 +135,39 @@ std::multimap<UnionType, MarkedReduction> NextState(std::multimap<UnionType, Uni
 	return res;
 }
 
-//std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::multimap<UnionType, UnionReduction> reducemap) {
-//
-//}
+std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::multimap<UnionType, UnionReduction> reducemap) {
+	std::vector<std::map<UnionType, PushdownCommand>> res(0);
+	auto initial_state = ReduceMapToMarkedMap(reducemap);
+	std::vector<std::multimap<UnionType, MarkedReduction>> states = { initial_state };
+	std::queue<int> StateQueue;
+	int index = 1;
+	StateQueue.push(0);
+
+	while (!StateQueue.empty()) {
+		auto cState = states[StateQueue.front()];
+		std::map<UnionType, PushdownCommand> transition;
+		StateQueue.pop();
+
+		auto follow = Follow(cState);
+		for (auto i : follow) {
+			auto nState = NextState(reducemap, cState, i);
+			auto nStateIter = std::find(states.begin(), states.end(), nState);
+			auto cmd = (i.getIsTerminal()) ? Command::SHIFT : Command::GOTO;
+			if (nStateIter == states.end()) {
+				states.push_back(nState);
+				transition.insert({ i, {cmd, index} });
+				StateQueue.push(index++);
+			}
+			else {
+				auto state_ind = nStateIter - states.begin();
+				transition.insert({ i, {cmd, state_ind} });
+			}
+		}
+		res.push_back(transition);
+	}
+
+	return res;
+}
 
 bool operator==(const std::pair<UnionType, MarkedReduction>& obj1, const std::pair<UnionType, MarkedReduction>& obj2) {
 	return (obj1.first == obj2.first) && (obj1.second == obj2.second);

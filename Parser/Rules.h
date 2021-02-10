@@ -19,6 +19,7 @@ std::multimap<UnionType, MarkedReduction> ReduceMapToMarkedMap(std::multimap<Uni
 std::vector<UnionType> Follow(std::multimap<UnionType, MarkedReduction> markedmap);
 std::multimap<UnionType, MarkedReduction> NextState(std::multimap<UnionType, UnionReduction>, std::multimap<UnionType, MarkedReduction>, UnionType);
 
+std::vector<UnionType> NextToken(std::multimap<UnionType, UnionReduction> markedmap, UnionType token);
 std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::multimap<UnionType, UnionReduction> reducemap);
 
 bool operator==(const std::pair<UnionType, MarkedReduction>& obj1, const std::pair<UnionType, MarkedReduction>& obj2);

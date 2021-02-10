@@ -142,6 +142,7 @@
     <ClCompile Include="AST.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nonterminal.cpp" />
+    <ClCompile Include="PushdownCommand.cpp" />
     <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="UnionReduction.cpp" />
