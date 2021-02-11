@@ -59,6 +59,15 @@ std::multimap<UnionType, MarkedReduction> ReduceMapToMarkedMap(std::multimap<Uni
 	return res;
 }
 
+std::vector<std::pair<UnionType, UnionReduction>> ReduceMapToRules(std::multimap<UnionType, UnionReduction> reducemap) {
+	std::vector<std::pair<UnionType, UnionReduction>> res(0);
+
+	for (auto i : reducemap) {
+		res.push_back(i);
+	}
+	return res;
+}
+
 std::vector<UnionType> Follow(std::multimap<UnionType, MarkedReduction> markedmap) {
 	std::vector<UnionType> res(0);
 	for (auto i = markedmap.begin(); i != markedmap.end(); i++) {
@@ -104,8 +113,8 @@ std::vector<UnionType> NextToken(std::multimap<UnionType, UnionReduction> reduce
 	for (auto i = markedmap.begin(); i != markedmap.end(); i++) {
 		auto rule = (*i).second.first.ReductionRules;
 		auto mark = (*i).second.second;
-		if (mark == rule.size() && std::find(NonterminalList.begin(), NonterminalList.end(), rule[mark - 1]) == NonterminalList.end()) {
-			NonterminalList.push_back(rule[mark - 1]);
+		if (mark == rule.size() && std::find(NonterminalList.begin(), NonterminalList.end(), (*i).first) == NonterminalList.end()) {
+			NonterminalList.push_back((*i).first);
 		}
 	}
 
@@ -159,22 +168,16 @@ std::multimap<UnionType, MarkedReduction> NextState(std::multimap<UnionType, Uni
 	return res;
 }
 
-std::vector<RuleKey> ReduceIndex(std::multimap<UnionType, UnionReduction> reducemap, std::multimap<UnionType, MarkedReduction> markedmap) {
-	std::vector<RuleKey> res(0);
+std::vector<int> ReduceIndex(std::vector<std::pair<UnionType, UnionReduction>> reducemap, std::multimap<UnionType, MarkedReduction> markedmap) {
+	std::vector<int> res(0);
 	for (auto i = markedmap.begin(); i != markedmap.end(); i++) {
 		auto rule = (*i).second.first.ReductionRules;
 		auto mark = (*i).second.second;
 
 		if (rule.size() == mark) {
-			auto lower = reducemap.lower_bound((*i).first);
-			auto upper = reducemap.upper_bound((*i).first);
-			int count = 0;
-			for (auto j = lower; j != upper; j++) {
-				if ((*j).second == (*i).second.first) {
-					res.push_back({ (*i).first, count });
-				}
-				count++;
-			}
+			std::pair<UnionType, UnionReduction> x = { (*i).first, (*i).second.first };
+			auto ind = std::find(reducemap.begin(), reducemap.end(), x) - reducemap.begin();
+			res.push_back(ind);
 		}
 	}
 
@@ -196,6 +199,8 @@ std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::m
 
 		auto follow = Follow(cState);
 		auto nToken = NextToken(reducemap, cState);
+
+		//SHIFT, GOTO
 		for (auto i : follow) {
 			auto nState = NextState(reducemap, cState, i);
 			auto nStateIter = std::find(states.begin(), states.end(), nState);
@@ -208,6 +213,15 @@ std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::m
 			else {
 				auto state_ind = nStateIter - states.begin();
 				transition.insert({ i, {cmd, state_ind} });
+			}
+		}
+
+		//REDUCE
+		for (auto i : nToken) {
+			if (std::find(follow.begin(), follow.end(), i) == follow.end()) {
+				auto rules = ReduceMapToRules(reducemap);
+				auto nIndex = ReduceIndex(rules, cState);
+				transition.insert({ i, {Command::REDUCE, nIndex[0]} });
 			}
 		}
 		res.push_back(transition);
