@@ -39,9 +39,15 @@ std::multimap<UnionType, MarkedReduction> ReduceMapToMarkedMap(std::multimap<Uni
 	std::vector<UnionType> prescaned;
 
 	auto Whole = reducemap.find(token);
-	if (Whole != reducemap.end()) {
-		auto Reduction = (*Whole).second;
-		res.insert({ (*Whole).first, MarkedReduction(Reduction, 0) });
+	//if (Whole != reducemap.end()) {
+	//	auto Reduction = (*Whole).second;
+	//	res.insert({ (*Whole).first, MarkedReduction(Reduction, 0) });
+	//	UnionQueue.push(Reduction.ReductionRules[0]);
+	//}
+
+	for (auto i = reducemap.lower_bound(token); i != reducemap.upper_bound(token); i++) {
+		auto Reduction = (*i).second;
+		res.insert({ (*i).first, MarkedReduction(Reduction, 0) });
 		UnionQueue.push(Reduction.ReductionRules[0]);
 	}
 
@@ -216,10 +222,56 @@ std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::m
 			}
 		}
 
+		auto rules = ReduceMapToRules(reducemap);
 		//REDUCE
 		for (auto i : nToken) {
 			if (std::find(follow.begin(), follow.end(), i) == follow.end()) {
-				auto rules = ReduceMapToRules(reducemap);
+				auto nIndex = ReduceIndex(rules, cState);
+				transition.insert({ i, {Command::REDUCE, nIndex[0]} });
+			}
+		}
+		res.push_back(transition);
+	}
+
+	return res;
+}
+
+std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::vector<std::pair<UnionType, UnionReduction>> rules) {
+	std::vector<std::map<UnionType, PushdownCommand>> res(0);
+	auto reducemap = ReduceMap(rules);
+	auto initial_state = ReduceMapToMarkedMap(reducemap);
+	std::vector<std::multimap<UnionType, MarkedReduction>> states = { initial_state };
+	std::queue<int> StateQueue;
+	int index = 1;
+	StateQueue.push(0);
+
+	while (!StateQueue.empty()) {
+		auto cState = states[StateQueue.front()];
+		std::map<UnionType, PushdownCommand> transition;
+		StateQueue.pop();
+
+		auto follow = Follow(cState);
+		auto nToken = NextToken(reducemap, cState);
+
+		//SHIFT, GOTO
+		for (auto i : follow) {
+			auto nState = NextState(reducemap, cState, i);
+			auto nStateIter = std::find(states.begin(), states.end(), nState);
+			auto cmd = (i.getIsTerminal()) ? Command::SHIFT : Command::GOTO;
+			if (nStateIter == states.end()) {
+				states.push_back(nState);
+				transition.insert({ i, {cmd, index} });
+				StateQueue.push(index++);
+			}
+			else {
+				auto state_ind = nStateIter - states.begin();
+				transition.insert({ i, {cmd, state_ind} });
+			}
+		}
+
+		//REDUCE
+		for (auto i : nToken) {
+			if (std::find(follow.begin(), follow.end(), i) == follow.end()) {
 				auto nIndex = ReduceIndex(rules, cState);
 				transition.insert({ i, {Command::REDUCE, nIndex[0]} });
 			}

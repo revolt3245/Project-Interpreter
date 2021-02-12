@@ -29,22 +29,22 @@ bool operator<=(const TokenType& token1, const TokenType& token2) {
 std::ostream& operator<<(std::ostream& os, const TokenType& tokentype) {
 	switch (tokentype) {
 	case TokenType::PLUS:
-		os << "PLUS";
+		os << "+";
 		break;
 	case TokenType::MINUS:
-		os << "MIN";
+		os << "-";
 		break;
 	case TokenType::MULT:
-		os << "MULT";
+		os << "*";
 		break;
 	case TokenType::DIV:
-		os << "DIV";
+		os << "/";
 		break;
 	case TokenType::LPAREN:
-		os << "LPN";
+		os << "(";
 		break;
 	case TokenType::RPAREN:
-		os << "RPN";
+		os << ")";
 		break;
 	case TokenType::NUM:
 		os << "NUM";
@@ -53,7 +53,7 @@ std::ostream& operator<<(std::ostream& os, const TokenType& tokentype) {
 		os << "VAR";
 		break;
 	case TokenType::LAST:
-		os << "EOF";
+		os << "#";
 		break;
 	}
 	return os;

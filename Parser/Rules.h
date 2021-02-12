@@ -25,6 +25,7 @@ std::vector<UnionType> NextToken(std::multimap<UnionType, UnionReduction> reduce
 
 std::vector<int> ReduceIndex(std::vector<std::pair<UnionType, UnionReduction>> reducemap, std::multimap<UnionType, MarkedReduction> markedmap);
 std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::multimap<UnionType, UnionReduction> reducemap);
+std::vector<std::map<UnionType, PushdownCommand>> PushdownStateTransition(std::vector<std::pair<UnionType, UnionReduction>> reducemap);
 
 bool operator==(const std::pair<UnionType, MarkedReduction>& obj1, const std::pair<UnionType, MarkedReduction>& obj2);
 bool operator==(const ReductionState& obj1, const ReductionState& obj2);
