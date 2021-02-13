@@ -140,6 +140,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Nonterminal.cpp" />
+    <ClCompile Include="PushdownAutomata.cpp" />
+    <ClCompile Include="PushdownCommand.cpp" />
+    <ClCompile Include="Rules.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="UnionReduction.cpp" />
+    <ClCompile Include="UnionToken.cpp" />
+    <ClCompile Include="UnionType.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Nonterminal.h" />
+    <ClInclude Include="PushdownAutomata.h" />
+    <ClInclude Include="PushdownCommand.h" />
+    <ClInclude Include="Rules.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="UnionReduction.h" />
+    <ClInclude Include="UnionToken.h" />
+    <ClInclude Include="UnionType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
