@@ -4,6 +4,7 @@
 
 enum class NonterminalType {
 	BEGIN,
+	EXPR,
 	E,
 	T,
 	F,

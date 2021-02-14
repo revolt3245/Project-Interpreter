@@ -9,6 +9,7 @@ enum class TokenType {
 	DIV,
 	LPAREN,
 	RPAREN,
+	EQUAL,
 	NUM,
 	VAR,
 	LAST

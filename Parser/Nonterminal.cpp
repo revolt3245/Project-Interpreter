@@ -35,6 +35,9 @@ std::ostream& operator<<(std::ostream& os, const NonterminalType& token) {
 	case NonterminalType::BEGIN:
 		os << "S";
 		break;
+	case NonterminalType::EXPR:
+		os << "Expr";
+		break;
 	case NonterminalType::E:
 		os << "E";
 		break;

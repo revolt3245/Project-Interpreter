@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <thread>
 #include <vector>
 #include <queue>
@@ -25,11 +26,14 @@ void function2() {
 }
 
 int main() {
-	std::thread t1(function1);
-	std::thread t2(function2);
+	std::string x = "123";
+	int xi = std::stoi(x);
+	std::cout << xi << std::endl;
+	//std::thread t1(function1);
+	//std::thread t2(function2);
 
-	t1.join();
-	t2.join();
+	//t1.join();
+	//t2.join();
 
 	return 0;
 }

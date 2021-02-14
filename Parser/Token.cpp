@@ -46,6 +46,9 @@ std::ostream& operator<<(std::ostream& os, const TokenType& tokentype) {
 	case TokenType::RPAREN:
 		os << ")";
 		break;
+	case TokenType::EQUAL:
+		os << "=";
+		break;
 	case TokenType::NUM:
 		os << "NUM";
 		break;

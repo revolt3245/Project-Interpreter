@@ -5,7 +5,9 @@
 
 int main() {
 	std::vector<std::pair<UnionType, UnionReduction>> ruleVector(0);
-	ruleVector.push_back({ NonterminalType::BEGIN, {{NonterminalType::E}, nullptr} });
+	ruleVector.push_back({ NonterminalType::BEGIN, {{NonterminalType::EXPR}, nullptr} });
+	ruleVector.push_back({ NonterminalType::EXPR, {{TokenType::VAR, TokenType::EQUAL, NonterminalType::E}, nullptr} });
+	ruleVector.push_back({ NonterminalType::EXPR, {{NonterminalType::E}, nullptr} });
 	ruleVector.push_back({ NonterminalType::E , { {NonterminalType::E, TokenType::PLUS, NonterminalType::T}, nullptr } });
 	ruleVector.push_back({ NonterminalType::E , { {NonterminalType::E, TokenType::MINUS, NonterminalType::T}, nullptr } });
 	ruleVector.push_back({ NonterminalType::E , { {NonterminalType::T}, nullptr } });
@@ -18,6 +20,8 @@ int main() {
 
 	PushdownAutomata pa(ruleVector);
 	std::queue<UnionToken> TokenQueue;
+	TokenQueue.push(UnionToken(TokenType::VAR));
+	TokenQueue.push(UnionToken(TokenType::EQUAL));
 	TokenQueue.push(UnionToken(TokenType::NUM));
 	TokenQueue.push(UnionToken(TokenType::MULT));
 	TokenQueue.push(UnionToken(TokenType::LPAREN));

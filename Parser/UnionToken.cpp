@@ -4,7 +4,10 @@
 UnionType UnionToken::getType() {
 	return this->Type;
 }
-AST UnionToken::getValue() {
+//AST UnionToken::getValue() {
+//	return this->Value;
+//}
+int UnionToken::getValue() {
 	return this->Value;
 }
 
@@ -12,7 +15,10 @@ AST UnionToken::getValue() {
 void UnionToken::setType(UnionType sType) {
 	this->Type = sType;
 }
-void UnionToken::setValue(AST sValue) {
+//void UnionToken::setValue(AST sValue) {
+//	this->Value = sValue;
+//}
+void UnionToken::setValue(int sValue) {
 	this->Value = sValue;
 }
 
