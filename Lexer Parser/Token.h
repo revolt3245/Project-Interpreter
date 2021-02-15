@@ -16,10 +16,10 @@ enum class TokenType {
 };
 
 TokenType operator++(TokenType& token);
-bool operator>(const TokenType& token1, const TokenType& token2);
-bool operator<(const TokenType& token1, const TokenType& token2);
-bool operator>=(const TokenType& token1, const TokenType& token2);
-bool operator<=(const TokenType& token1, const TokenType& token2);
+//bool operator>(const TokenType& token1, const TokenType& token2);
+//bool operator<(const TokenType& token1, const TokenType& token2);
+//bool operator>=(const TokenType& token1, const TokenType& token2);
+//bool operator<=(const TokenType& token1, const TokenType& token2);
 
 std::ostream& operator<<(std::ostream& os, const TokenType& tokentype);
 

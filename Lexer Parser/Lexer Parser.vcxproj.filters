@@ -18,6 +18,9 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="AST.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="Nonterminal.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -42,14 +45,14 @@
     <ClCompile Include="UnionType.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="AST.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="FiniteStateMachine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AST.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="Nonterminal.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -72,9 +75,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="UnionType.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AST.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="FiniteStateMachine.h">

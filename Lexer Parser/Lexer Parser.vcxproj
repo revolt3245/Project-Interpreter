@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -18,11 +18,36 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AST.cpp" />
+    <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Nonterminal.cpp" />
+    <ClCompile Include="PushdownAutomata.cpp" />
+    <ClCompile Include="PushdownCommand.cpp" />
+    <ClCompile Include="Rules.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="UnionReduction.cpp" />
+    <ClCompile Include="UnionToken.cpp" />
+    <ClCompile Include="UnionType.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AST.h" />
+    <ClInclude Include="FiniteStateMachine.h" />
+    <ClInclude Include="Nonterminal.h" />
+    <ClInclude Include="PushdownAutomata.h" />
+    <ClInclude Include="PushdownCommand.h" />
+    <ClInclude Include="Rules.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="UnionReduction.h" />
+    <ClInclude Include="UnionToken.h" />
+    <ClInclude Include="UnionType.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a1fdbf36-ce65-4cdf-8dfd-5d528001626b}</ProjectGuid>
-    <RootNamespace>LexerandParser</RootNamespace>
+    <ProjectGuid>{dcb94783-7bb7-44d7-af61-608a5d61c53b}</ProjectGuid>
+    <RootNamespace>LexerParser</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -138,31 +163,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="AST.cpp" />
-    <ClCompile Include="FiniteStateMachine.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Nonterminal.cpp" />
-    <ClCompile Include="PushdownAutomata.cpp" />
-    <ClCompile Include="PushdownCommand.cpp" />
-    <ClCompile Include="Rules.cpp" />
-    <ClCompile Include="Token.cpp" />
-    <ClCompile Include="UnionReduction.cpp" />
-    <ClCompile Include="UnionToken.cpp" />
-    <ClCompile Include="UnionType.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AST.h" />
-    <ClInclude Include="FiniteStateMachine.h" />
-    <ClInclude Include="Nonterminal.h" />
-    <ClInclude Include="PushdownAutomata.h" />
-    <ClInclude Include="PushdownCommand.h" />
-    <ClInclude Include="Rules.h" />
-    <ClInclude Include="Token.h" />
-    <ClInclude Include="UnionReduction.h" />
-    <ClInclude Include="UnionToken.h" />
-    <ClInclude Include="UnionType.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

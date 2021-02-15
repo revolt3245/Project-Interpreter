@@ -1,12 +1,10 @@
 #include "Rules.h"
 
 std::map<TokenType, std::regex> regex_map(std::vector<std::regex> regex) {
-	auto regexData = regex.data();
 	std::map<TokenType, std::regex> res;
-	for (TokenType i = TokenType::BEGIN; i != TokenType::LAST; ++i) {
-		std::pair<TokenType, std::regex> p(i, *regexData);
-		res.insert(p);
-		regexData++;
+	int count = 0;
+	for (auto i = TokenType::BEGIN; i != TokenType::LAST; ++i) {
+		res.insert({ i, regex[count++] });
 	}
 	return res;
 }
@@ -50,6 +48,11 @@ std::multimap<UnionType, MarkedReduction> ReduceMapToMarkedMap(std::multimap<Uni
 	std::vector<UnionType> prescaned;
 
 	auto Whole = reducemap.find(token);
+	//if (Whole != reducemap.end()) {
+	//	auto Reduction = (*Whole).second;
+	//	res.insert({ (*Whole).first, MarkedReduction(Reduction, 0) });
+	//	UnionQueue.push(Reduction.ReductionRules[0]);
+	//}
 
 	for (auto i = reducemap.lower_bound(token); i != reducemap.upper_bound(token); i++) {
 		auto Reduction = (*i).second;

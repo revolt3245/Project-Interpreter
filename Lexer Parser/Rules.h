@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <regex>
 
+#include "Token.h"
 #include "UnionType.h"
 #include "UnionReduction.h"
 #include "PushdownCommand.h"

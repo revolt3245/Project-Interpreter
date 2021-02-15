@@ -1,39 +1,26 @@
 #include <iostream>
 #include <string>
-#include <thread>
 #include <vector>
 #include <queue>
 
-std::queue<int> GlobalQueue;
-std::vector<int> GlobalVector;
-bool finishFlag = false;
-
-void function1() {
-	for (int i = 0; i < 10; i++) {
-		//GlobalQueue.push(i);
-		GlobalVector.push_back(i);
-	}
-	finishFlag = true;
-}
-
-void function2() {
-	while (!finishFlag || !GlobalVector.empty()) {
-		if (!GlobalVector.empty()) {
-			std::cout << GlobalVector[0] << std::endl;
-			GlobalVector.erase(GlobalVector.begin());
-		}
-	}
-}
+#include "PushdownAutomata.h"
 
 int main() {
-	std::string x = "123";
-	int xi = std::stoi(x);
-	std::cout << xi << std::endl;
-	//std::thread t1(function1);
-	//std::thread t2(function2);
+	std::vector<std::pair<UnionType, UnionReduction>> ruleVector(0);
+	ruleVector.push_back({ NonterminalType::BEGIN, {{NonterminalType::EXPR}, nullptr} });
+	ruleVector.push_back({ NonterminalType::EXPR, {{TokenType::VAR, TokenType::EQUAL, NonterminalType::E}, nullptr} });
+	ruleVector.push_back({ NonterminalType::EXPR, {{NonterminalType::E}, nullptr} });
+	ruleVector.push_back({ NonterminalType::E , { {NonterminalType::E, TokenType::PLUS, NonterminalType::T}, nullptr } });
+	ruleVector.push_back({ NonterminalType::E , { {NonterminalType::E, TokenType::MINUS, NonterminalType::T}, nullptr } });
+	ruleVector.push_back({ NonterminalType::E , { {NonterminalType::T}, nullptr } });
+	ruleVector.push_back({ NonterminalType::T , { {NonterminalType::T, TokenType::MULT, NonterminalType::F}, nullptr } });
+	ruleVector.push_back({ NonterminalType::T , { {NonterminalType::T, TokenType::DIV, NonterminalType::F}, nullptr } });
+	ruleVector.push_back({ NonterminalType::T , { {NonterminalType::F}, nullptr } });
+	ruleVector.push_back({ NonterminalType::F , { {TokenType::LPAREN, NonterminalType::E, TokenType::RPAREN}, nullptr } });
+	ruleVector.push_back({ NonterminalType::F , { {TokenType::NUM}, nullptr } });
+	ruleVector.push_back({ NonterminalType::F , { {TokenType::VAR}, nullptr } });
 
-	//t1.join();
-	//t2.join();
+	PushdownAutomata pa(ruleVector);
 
 	return 0;
 }
