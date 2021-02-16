@@ -35,6 +35,18 @@ std::ostream& operator<<(std::ostream& os, const NonterminalType& token) {
 	case NonterminalType::BEGIN:
 		os << "S";
 		break;
+	case NonterminalType::PROGRAM:
+		os << "Program";
+		break;
+	case NonterminalType::EXE:
+		os << "Exe";
+		break;
+	case NonterminalType::DECLARE:
+		os << "Declare";
+		break;
+	case NonterminalType::TYPES:
+		os << "Types";
+		break;
 	case NonterminalType::EXPR:
 		os << "Expr";
 		break;

@@ -9,7 +9,8 @@
 
 struct UnionReduction {
 	std::vector<UnionType> ReductionRules;
-	AST(*ReductionAction)(std::vector<UnionToken> token);
+	//AST(*ReductionAction)(std::vector<UnionToken> token);
+	void(*ReductionAction)();
 };
 
 std::ostream& operator<<(std::ostream& os, const UnionReduction& obj);

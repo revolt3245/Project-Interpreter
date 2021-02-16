@@ -97,22 +97,58 @@ std::vector<UnionType> Follow(std::multimap<UnionType, MarkedReduction> markedma
 
 std::vector<UnionType> NextToken(std::multimap<UnionType, UnionReduction> reducemap, UnionType token) {
 	std::vector<UnionType> res(0);
-	std::vector<UnionType> prescaned = { token };
-	if (token == NonterminalType::BEGIN) {
-		res.push_back(TokenType::LAST);
-	}
-	else {
-		for (auto i = reducemap.begin(); i != reducemap.end(); i++) {
-			auto rule = (*i).second.ReductionRules;
-			auto tokenIter = std::find(rule.begin(), rule.end(), token);
-			if (rule.size() > tokenIter - rule.begin() + 1 && std::find(res.begin(), res.end(), *(tokenIter + 1)) == res.end()) {
-				res.push_back(*(tokenIter + 1));
+	std::vector<UnionType> prescaned(0);
+	std::vector<UnionType> firstPrescaned(0);
+	std::queue<UnionType> TokenQueue;
+	std::queue<bool> isFirstQueue;
+	TokenQueue.push(token);
+	isFirstQueue.push(false);
+
+	while (!TokenQueue.empty()) {
+		auto cToken = TokenQueue.front();
+		auto first = isFirstQueue.front();
+		TokenQueue.pop();
+		isFirstQueue.pop();
+
+		if (cToken == NonterminalType::BEGIN) {
+			res.push_back(TokenType::LAST);
+		}
+		else if (first) {
+			for (auto i = reducemap.lower_bound(cToken); i != reducemap.upper_bound(cToken); i++) {
+				auto rules = (*i).second.ReductionRules;
+				if (rules[0].getIsTerminal()) {
+					res.push_back(rules[0]);
+				}
+				else if (std::find(firstPrescaned.begin(), firstPrescaned.end(), rules[0]) == firstPrescaned.end()) {
+					TokenQueue.push(rules[0]);
+					isFirstQueue.push(true);
+					firstPrescaned.push_back(rules[0]);
+				}
 			}
-			else if (rule.size() == tokenIter - rule.begin() + 1) {
-				auto upper_token = NextToken(reducemap, (*i).first);
-				for (auto j : upper_token) {
-					if (std::find(res.begin(), res.end(), j) == res.end()) {
-						res.push_back(j);
+		}
+		else {
+			for (auto i = reducemap.begin(); i != reducemap.end(); i++) {
+				auto rule = (*i).second.ReductionRules;
+				auto tokenIter = std::find(rule.begin(), rule.end(), cToken);
+
+				if (rule.size() > tokenIter - rule.begin() + 1 && std::find(res.begin(), res.end(), *(tokenIter + 1)) == res.end()) {
+					auto t = *(tokenIter + 1);
+					if (t.getIsTerminal()) {
+						res.push_back(t);
+					}
+					else if(std::find(firstPrescaned.begin(), firstPrescaned.end(), t) == firstPrescaned.end()){
+						//Nonterminal First
+						firstPrescaned.push_back(t);
+						TokenQueue.push(t);
+						isFirstQueue.push(true);
+					}
+				}
+				else if(rule.size() == tokenIter - rule.begin() + 1){
+					auto upper = (*i).first;
+					if (std::find(prescaned.begin(), prescaned.end(), upper) == prescaned.end()) {
+						prescaned.push_back(upper);
+						TokenQueue.push(upper);
+						isFirstQueue.push(false);
 					}
 				}
 			}

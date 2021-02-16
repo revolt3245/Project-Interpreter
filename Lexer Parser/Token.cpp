@@ -6,26 +6,6 @@ TokenType operator++(TokenType& token) {
 	token = res;
 	return res;
 }
-//bool operator>(const TokenType& token1, const TokenType& token2) {
-//	auto v1 = std::underlying_type<TokenType>::type(token1);
-//	auto v2 = std::underlying_type<TokenType>::type(token2);
-//	return v1 > v2;
-//}
-//bool operator<(const TokenType& token1, const TokenType& token2) {
-//	auto v1 = std::underlying_type<TokenType>::type(token1);
-//	auto v2 = std::underlying_type<TokenType>::type(token2);
-//	return v1 < v2;
-//}
-//bool operator>=(const TokenType& token1, const TokenType& token2) {
-//	auto v1 = std::underlying_type<TokenType>::t5ype(token1);
-//	auto v2 = std::underlying_type<TokenType>::type(token2);
-//	return v1 >= v2;
-//}
-//bool operator<=(const TokenType& token1, const TokenType& token2) {
-//	auto v1 = std::underlying_type<TokenType>::type(token1);
-//	auto v2 = std::underlying_type<TokenType>::type(token2);
-//	return v1 <= v2;
-//}
 
 std::ostream& operator<<(std::ostream& os, const TokenType& tokentype) {
 	switch (tokentype) {
@@ -49,6 +29,24 @@ std::ostream& operator<<(std::ostream& os, const TokenType& tokentype) {
 		break;
 	case TokenType::EQUAL:
 		os << "=";
+		break;
+	case TokenType::SEMICOLON:
+		os << ";";
+		break;
+	case TokenType::COLON:
+		os << ":";
+		break;
+	case TokenType::T_INT:
+		os << "int";
+		break;
+	case TokenType::T_DOUBLE:
+		os << "double";
+		break;
+	case TokenType::T_CHAR:
+		os << "char";
+		break;
+	case TokenType::T_VAR:
+		os << "var";
 		break;
 	case TokenType::NUM:
 		os << "NUM";

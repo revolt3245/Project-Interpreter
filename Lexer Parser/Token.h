@@ -10,16 +10,18 @@ enum class TokenType {
 	LPAREN,
 	RPAREN,
 	EQUAL,
+	SEMICOLON,
+	COLON,
+	T_INT,
+	T_DOUBLE,
+	T_CHAR,
+	T_VAR,
 	NUM,
 	VAR,
 	LAST
 };
 
 TokenType operator++(TokenType& token);
-//bool operator>(const TokenType& token1, const TokenType& token2);
-//bool operator<(const TokenType& token1, const TokenType& token2);
-//bool operator>=(const TokenType& token1, const TokenType& token2);
-//bool operator<=(const TokenType& token1, const TokenType& token2);
 
 std::ostream& operator<<(std::ostream& os, const TokenType& tokentype);
 

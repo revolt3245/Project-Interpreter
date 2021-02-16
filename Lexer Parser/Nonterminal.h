@@ -4,7 +4,11 @@
 
 enum class NonterminalType {
 	BEGIN,
+	PROGRAM,
+	EXE,
 	EXPR,
+	DECLARE,
+	TYPES,
 	E,
 	T,
 	F,
