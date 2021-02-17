@@ -7,10 +7,13 @@
 #include "AST.h"
 #include "UnionToken.h"
 
+typedef UnionToken(*ra)(std::vector < UnionToken>);
+
 struct UnionReduction {
 	std::vector<UnionType> ReductionRules;
 	//AST(*ReductionAction)(std::vector<UnionToken> token);
-	void(*ReductionAction)();
+	ra ReductionAction;
+	[&] (std::vector<UnionToken>) x;
 };
 
 std::ostream& operator<<(std::ostream& os, const UnionReduction& obj);

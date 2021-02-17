@@ -11,20 +11,22 @@ class ValueContainer
 {
 public:
 	//Constructor
-	ValueContainer() { this->Value.i = 0; };
-	ValueContainer(int nInt) { setValue(nInt); };
-	ValueContainer(double nDouble) { setValue(nDouble); };
-	ValueContainer(char nChar) { setValue(nChar); };
+	ValueContainer():Type(ValueType::INT) { setValue(0); };
+	ValueContainer(int nInt) :Type(ValueType::INT) { setValue(nInt); };
+	ValueContainer(double nDouble) :Type(ValueType::DOUBLE) { setValue(nDouble); };
+	ValueContainer(char nChar) :Type(ValueType::CHAR) { setValue(nChar); };
 
 	//Destructor
 	~ValueContainer() {};
 
 	//Getter
+	ValueType getValueType();
 	int getAsInt();
 	double getAsDouble();
 	char getAsChar();
 
 	//Setter
+	void setValueType(ValueType sType);
 	void setValue(int sInt);
 	void setValue(double sDouble);
 	void setValue(char sChar);
@@ -42,6 +44,12 @@ public:
 
 	//Disp Operator
 	friend std::ostream& operator<<(std::ostream& os, const ValueContainer& obj1);
+
+	//Arithmatic
+	friend ValueContainer operator+(const ValueContainer& obj1, const ValueContainer& obj2);
+	friend ValueContainer operator-(const ValueContainer& obj1, const ValueContainer& obj2);
+	friend ValueContainer operator*(const ValueContainer& obj1, const ValueContainer& obj2);
+	friend ValueContainer operator/(const ValueContainer& obj1, const ValueContainer& obj2);
 private:
 	union value {
 		int i;

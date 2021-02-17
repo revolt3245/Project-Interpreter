@@ -20,6 +20,9 @@ bool PushdownAutomata::Step(std::queue<UnionToken>& TokenQueue, std::vector<Unio
 	if (StateStack.size() == TokenStack.size() + 1) {
 		if (TokenQueue.size() > 0) {
 			auto token = TokenQueue.front();
+			if (this->Commands[state].find(token.getType()) == Commands[state].end()) {
+				throw std::runtime_error("There is no reduction rule!");
+			}
 			auto command = this->Commands[state][token.getType()];
 
 			if (command.cmd == Command::SHIFT) {
@@ -30,12 +33,14 @@ bool PushdownAutomata::Step(std::queue<UnionToken>& TokenQueue, std::vector<Unio
 			else if (command.cmd == Command::REDUCE) {
 				auto size = this->Rules[command.state].second.ReductionRules.size();
 				auto AfterReduction = this->Rules[command.state].first;
+				std::vector<UnionToken> args(size);
 				isComplete = (AfterReduction == NonterminalType::BEGIN);
 				for (auto i = 0; i < size; i++) {
+					args[size - i - 1] = TokenStack.back();
 					TokenStack.pop_back();
 					StateStack.pop_back();
 				}
-				TokenStack.push_back(AfterReduction);
+				TokenStack.push_back(UnionToken(this->Rules[command.state].second.ReductionAction(args)));
 			}
 			else {
 				throw std::runtime_error("Token Stack and State Stack does not match!");
@@ -43,6 +48,9 @@ bool PushdownAutomata::Step(std::queue<UnionToken>& TokenQueue, std::vector<Unio
 		}
 	}
 	else if (StateStack.size() == TokenStack.size()) {
+		if (this->Commands[state].find(token_stored.getType()) == Commands[state].end()) {
+			throw std::runtime_error("There is no reduction rule!");
+		}
 		auto command = this->Commands[state][token_stored.getType()];
 		if (command.cmd == Command::GOTO) {
 			StateStack.push_back(command.state);

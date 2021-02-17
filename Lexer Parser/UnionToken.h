@@ -14,8 +14,8 @@ public:
 	UnionToken() :Type(), Value() {};
 	UnionToken(UnionType nType) :Type(nType), Value() {};
 	//UnionToken(UnionType nType, AST nValue) :Type(nType), Value(nValue) {};
-	UnionToken(UnionType nType, int nValue) :Type(nType), Value(nValue) {};
-	UnionToken(Token nToken) :Type(nToken.getType()) {};
+	UnionToken(UnionType nType, std::string nValue) :Type(nType), Value(nValue) {};
+	UnionToken(Token nToken) :Type(nToken.getType()), Value(nToken.getValue()) {};
 
 	//Destructor
 	~UnionToken() {};
@@ -23,11 +23,11 @@ public:
 	//Getter
 	UnionType getType();
 	//AST getValue();
-	int getValue();
+	std::string getValue();
 	//Setter
 	void setType(UnionType sType);
 	//void setValue(AST sValue);
-	void setValue(int sValue);
+	void setValue(std::string sValue);
 
 	//Disp
 	friend std::ostream& operator<<(std::ostream& os, const UnionToken& obj);
@@ -38,6 +38,5 @@ public:
 private:
 	UnionType Type;
 	//AST Value;
-	int Value;
-	std::string Name;
+	std::string Value;
 };

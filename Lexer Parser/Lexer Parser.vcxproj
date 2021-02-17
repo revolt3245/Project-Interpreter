@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="AST.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="Initialize.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nonterminal.cpp" />
     <ClCompile Include="PushdownAutomata.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="AST.h" />
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="Global Memory.h" />
+    <ClInclude Include="Initialize.h" />
     <ClInclude Include="Nonterminal.h" />
     <ClInclude Include="PushdownAutomata.h" />
     <ClInclude Include="PushdownCommand.h" />
