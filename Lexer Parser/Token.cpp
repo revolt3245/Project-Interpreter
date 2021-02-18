@@ -48,6 +48,9 @@ std::ostream& operator<<(std::ostream& os, const TokenType& tokentype) {
 	case TokenType::T_VAR:
 		os << "var";
 		break;
+	case TokenType::HALT:
+		os << "halt";
+		break;
 	case TokenType::NUM:
 		os << "NUM";
 		break;

@@ -27,6 +27,7 @@ public:
 
 	//Setter
 	void setValueType(ValueType sType);
+	void setValue(ValueContainer);
 	void setValue(int sInt);
 	void setValue(double sDouble);
 	void setValue(char sChar);

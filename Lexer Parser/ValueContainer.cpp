@@ -35,6 +35,19 @@ void ValueContainer::setValueType(ValueType sType) {
 	}
 	this->Type = sType;
 }
+void ValueContainer::setValue(ValueContainer sValue) {
+	switch (this->Type) {
+	case ValueType::INT:
+		this->Value.i = sValue.getAsInt();
+		break;
+	case ValueType::DOUBLE:
+		this->Value.i = sValue.getAsDouble();
+		break;
+	case ValueType::CHAR:
+		this->Value.i = sValue.getAsChar();
+		break;
+	}
+}
 void ValueContainer::setValue(int sInt) {
 	switch (this->Type) {
 	case ValueType::INT:

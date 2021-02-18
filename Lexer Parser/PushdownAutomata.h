@@ -6,6 +6,7 @@
 #include <queue>
 
 #include "Rules.h"
+#include "Global Memory.h"
 class PushdownAutomata
 {
 public:

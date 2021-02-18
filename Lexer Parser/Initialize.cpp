@@ -15,169 +15,33 @@ void Initialize(std::vector<std::regex>& regex_vec, std::vector<std::pair<UnionT
 	regex_vec.push_back(std::regex("^double"));
 	regex_vec.push_back(std::regex("^char"));
 	regex_vec.push_back(std::regex("^var"));
+	regex_vec.push_back(std::regex("^halt"));
 	regex_vec.push_back(std::regex("^[0-9]+"));
 	regex_vec.push_back(std::regex("^[A-Za-z_][A-Za-z0-9_]*"));
 
 	std::vector <ra> actionVector(0);
 
-	actionVector.push_back(
-		[&](std::vector<UnionToken> args) {
-		return UnionToken(NonterminalType::BEGIN); 
-		}
-	);//BEGIN->PROGRAM
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::PROGRAM); 
-		}
-	);//PROGRAM->PROGRAM EXE
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::PROGRAM); 
-		}
-	);//PROGRAM->EXE
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::EXE); 
-		}
-	);//EXE->EXPR;
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto key = args[0].getValue();
-			Hashmap[key] = Stack.back();
-			Stack.pop_back();
-			return UnionToken(NonterminalType::EXPR); 
-		}
-	);//EXPR->DECLARE
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto key = args[0].getValue();
-			Hashmap[key] = Stack.back();
-			Stack.pop_back();
-			return UnionToken(NonterminalType::EXPR); 
-		}
-	);//EXPR->DECLARE = E
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto key = args[0].getValue();
-			Hashmap[key] = Stack.back();
-			Stack.pop_back();
-			return UnionToken(NonterminalType::EXPR); 
-		}
-	);//EXPR->VAR = E
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			std::string o_buffer;
-			ss << Stack.back() << std::endl;
-			ss >> o_buffer;
-			OutputBuffer.push_back(o_buffer);
-			Stack.pop_back();
-			return UnionToken(NonterminalType::EXPR); 
-		}
-	);//EXPR->E
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto key = args[1].getValue();
-			ValueContainer value;
-			if (args[3].getValue() == "int") value.setValueType(ValueType::INT);
-			else if (args[3].getValue() == "double") value.setValueType(ValueType::DOUBLE);
-			else if (args[3].getValue() == "char") value.setValueType(ValueType::CHAR);
-
-			Hashmap.insert({ key, value });
-			return UnionToken(NonterminalType::DECLARE, key); 
-		}
-	);//DECLARE -> var VAR:TYPES
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::TYPES, "int"); 
-		}
-	);//TYPES->int
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::TYPES, "double"); 
-		}
-	);//TYPES->double
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::TYPES, "char"); 
-		}
-	);//TYPES->char
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto x = Stack.back();
-			Stack.pop_back();
-			x = x + Stack.back();
-			Stack.pop_back();
-			Stack.push_back(x);
-			return UnionToken(NonterminalType::E); 
-		}
-	);//E->E+T
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto x = Stack.back();
-			Stack.pop_back();
-			x = x - Stack.back();
-			Stack.pop_back();
-			Stack.push_back(x);
-			return UnionToken(NonterminalType::E);
-		}
-	);//E->E-T
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::E); 
-		}
-	);//E->T
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto x = Stack.back();
-			Stack.pop_back();
-			x = x * Stack.back();
-			Stack.pop_back();
-			Stack.push_back(x);
-			return UnionToken(NonterminalType::T); 
-		}
-	);//T->T*F
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto x = Stack.back();
-			Stack.pop_back();
-			x = x / Stack.back();
-			Stack.pop_back();
-			Stack.push_back(x);
-			return UnionToken(NonterminalType::T); 
-		}
-	);//T->T/F
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::T); 
-		}
-	);//T->F
-
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			return UnionToken(NonterminalType::F); 
-		}
-	);//F->(E)
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			auto value = std::stoi(args[0].getValue());
-			ValueContainer V(value);
-			Stack.push_back(V);
-			return UnionToken(NonterminalType::F); 
-		}
-	);//F->NUM
-	actionVector.push_back(
-		[](std::vector<UnionToken> args) {
-			Stack.push_back(Hashmap[args[0].getValue()]);
-			return UnionToken(NonterminalType::F); 
-		}
-	);//F->VAR
+	actionVector.push_back(FuncR0);
+	actionVector.push_back(FuncR1);
+	actionVector.push_back(FuncR2);
+	actionVector.push_back(FuncR3);
+	actionVector.push_back(FuncR4);
+	actionVector.push_back(FuncR5);
+	actionVector.push_back(FuncR6);
+	actionVector.push_back(FuncR7);
+	actionVector.push_back(FuncR8);
+	actionVector.push_back(FuncR9);
+	actionVector.push_back(FuncR10);
+	actionVector.push_back(FuncR11);
+	actionVector.push_back(FuncR12);
+	actionVector.push_back(FuncR13);
+	actionVector.push_back(FuncR14);
+	actionVector.push_back(FuncR15);
+	actionVector.push_back(FuncR16);
+	actionVector.push_back(FuncR17);
+	actionVector.push_back(FuncR18);
+	actionVector.push_back(FuncR19);
+	actionVector.push_back(FuncR20);
 
 	auto actionData = actionVector.data();
 

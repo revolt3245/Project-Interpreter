@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actions.cpp" />
     <ClCompile Include="AST.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="Global Memory.cpp" />
     <ClCompile Include="Initialize.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nonterminal.cpp" />
@@ -34,6 +36,7 @@
     <ClCompile Include="ValueContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actions.h" />
     <ClInclude Include="AST.h" />
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="Global Memory.h" />

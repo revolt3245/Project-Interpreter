@@ -1,5 +1,10 @@
 #include "PushdownAutomata.h"
 
+extern std::map<std::string, ValueContainer> Hashmap;
+extern std::vector<ValueContainer> Stack;
+
+extern std::vector<std::string> OutputBuffer;
+
 std::vector<std::map<UnionType, PushdownCommand>> PushdownAutomata::getCommands() {
 	return this->Commands;
 }
@@ -40,7 +45,8 @@ bool PushdownAutomata::Step(std::queue<UnionToken>& TokenQueue, std::vector<Unio
 					TokenStack.pop_back();
 					StateStack.pop_back();
 				}
-				TokenStack.push_back(UnionToken(this->Rules[command.state].second.ReductionAction(args)));
+				auto token = this->Rules[command.state].second.ReductionAction(args);
+				TokenStack.push_back(token);
 			}
 			else {
 				throw std::runtime_error("Token Stack and State Stack does not match!");

@@ -2,18 +2,19 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include "UnionType.h"
 #include "AST.h"
 #include "UnionToken.h"
+#include "ValueContainer.h"
 
-typedef UnionToken(*ra)(std::vector < UnionToken>);
+typedef UnionToken(*ra)(std::vector<UnionToken>);
 
 struct UnionReduction {
 	std::vector<UnionType> ReductionRules;
 	//AST(*ReductionAction)(std::vector<UnionToken> token);
 	ra ReductionAction;
-	[&] (std::vector<UnionToken>) x;
 };
 
 std::ostream& operator<<(std::ostream& os, const UnionReduction& obj);

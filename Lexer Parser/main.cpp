@@ -2,6 +2,7 @@
 #include <vector>
 #include <regex>
 #include <thread>
+#include <fstream>
 #include <ctime>
 
 #include "PushdownAutomata.h"
@@ -9,82 +10,95 @@
 #include "Global Memory.h"
 #include "Initialize.h"
 
-std::string code = "var test1:int = 12; var test2:int = 3; test1 + test2;";
+PushdownAutomata pa;
+FiniteStateMachine fsm;
+
+std::map<std::string, ValueContainer> Hashmap;
+std::vector<ValueContainer> Stack;
+
+std::vector<std::string> OutputBuffer;
+std::stringstream ss;
+
+extern std::queue<UnionToken> GlobalQueue;
+extern std::vector<UnionToken> GlobalTokenStack;
+extern std::vector<int> GlobalStateStack;
+
+extern bool ParseComplete;
+extern bool LexComplete;
+extern bool recvFlag;
+extern bool sendFlag;
+
+bool GlobalHalt = false;
+
+std::queue<std::string> codes;
+std::string codebuff;
 
 clock_t delay = 0.05 * CLOCKS_PER_SEC;
 
+void getInput();
 void lex();
 void parse();
-void print();
 
 int main() {
 	std::vector<std::regex> regex_vec(0);
 	std::vector<std::pair<UnionType, UnionReduction>> ruleVector(0);
+
+	codebuff = "";
+
+	GlobalTokenStack.push_back(UnionToken(NonterminalType::PROGRAM));
 
 	Initialize(regex_vec, ruleVector);
 
 	fsm.set_Rules(regex_vec);
 	pa.setRules(ruleVector);
 
+	std::thread t0(getInput);
 	std::thread t1(lex);
 	std::thread t2(parse);
-	std::thread t3(print);
 
+	t0.join();
 	t1.join();
 	t2.join();
-	t3.join();
+
+	return 0;
+}
+
+void getInput() {
+	while (!LexComplete) {
+		std::string ibuff;
+		std::cin >> ibuff;
+		codes.push(ibuff);
+		if (ibuff.find("halt") != std::string::npos) { 
+			GlobalHalt = true;
+			break; 
+		}
+	}
+	return;
 }
 
 void lex() {
 	while (!LexComplete) {
-		clock_t start = clock();
 		Token x;
-		if (fsm.step(code, x)) {
-			GlobalQueue.push(x);
-			if (x.getType() == TokenType::LAST) {
+		if (fsm.step(codebuff, x)) {
+			if (x.getType() == TokenType::HALT) {
 				LexComplete = true;
+				GlobalQueue.push(Token(TokenType::LAST, ""));
+			}
+			else if(x.getType() != TokenType::LAST){
+				GlobalQueue.push(x);
+			}
+			else {
+				if (!codes.empty()) {
+					codebuff = codes.front();
+					codes.pop();
+				}
 			}
 		}
-		while (clock() - start < delay);
 	}
 }
 
 void parse() {
 	while (!ParseComplete) {
-		if (recvFlag) {
-			recvFlag = false;
-			ParseComplete = pa.Step(GlobalQueue, GlobalTokenStack, GlobalStateStack);
-
-			sendFlag = true;
-		}
-	}
-}
-
-void print() {
-	while (!LexComplete || !ParseComplete) {
-		clock_t start = clock();
-		system("CLS");
-		std::cout << "Code" << std::endl;
-		std::cout << code << std::endl;
-		std::cout << std::endl;
-		if (sendFlag) {
-			sendFlag = false;
-			std::cout << "TokenStack" << std::endl;
-			for (auto i : GlobalTokenStack) {
-				std::cout << i.getType() << " ";
-			}
-			std::cout << std::endl << std::endl;
-			std::cout << "StateStack" << std::endl;
-			for (auto i : GlobalStateStack) {
-				std::cout << i << " ";
-			}
-			std::cout << std::endl << std::endl;
-			std::cout << "StringStream" << std::endl;
-			for (auto i : OutputBuffer) {
-				std::cout << i << std::endl;
-			}
-			recvFlag = true;
-		}
-		while (clock() - start < delay);
+		ParseComplete = pa.Step(GlobalQueue, GlobalTokenStack, GlobalStateStack);
 	}
 }

@@ -16,6 +16,7 @@ enum class TokenType {
 	T_DOUBLE,
 	T_CHAR,
 	T_VAR,
+	HALT,
 	NUM,
 	VAR,
 	LAST
