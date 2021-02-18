@@ -23,9 +23,9 @@ UnionToken FuncR4(std::vector<UnionToken> args) {
 }
 UnionToken FuncR5(std::vector<UnionToken> args) {
 	auto key = args[0].getValue();
-	if (args[3].getValue() == "int")Hashmap[key] = int(Stack.back());
-	else if (args[3].getValue() == "double")Hashmap[key] = double(Stack.back());
-	else if (args[3].getValue() == "char")Hashmap[key] = char(Stack.back());
+	if (args[2].getValue() == "int")Hashmap[key] = int(Stack.back());
+	else if (args[2].getValue() == "double")Hashmap[key] = double(Stack.back());
+	else if (args[2].getValue() == "char")Hashmap[key] = char(Stack.back());
 	Stack.pop_back();
 	return UnionToken(NonterminalType::EXPR);
 }

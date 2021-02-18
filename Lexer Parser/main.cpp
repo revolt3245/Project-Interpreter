@@ -65,8 +65,10 @@ int main() {
 
 void getInput() {
 	while (!LexComplete) {
+		std::cout << ">>> ";
 		std::string ibuff;
-		std::cin >> ibuff;
+		//std::cin >> ibuff;
+		std::getline(std::cin, ibuff);
 		codes.push(ibuff);
 		if (ibuff.find("halt") != std::string::npos) { 
 			GlobalHalt = true;
