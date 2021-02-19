@@ -36,10 +36,7 @@ UnionToken FuncR6(std::vector<UnionToken> args) {
 }
 UnionToken FuncR7(std::vector<UnionToken> args) {
 	std::string o_buffer;
-	//ss << Stack.back() << std::endl;
 	std::cout << Stack.back() << std::endl;
-	//ss >> o_buffer;
-	//OutputBuffer.push_back(o_buffer);
 	Stack.pop_back();
 	return UnionToken(NonterminalType::EXPR);
 }
