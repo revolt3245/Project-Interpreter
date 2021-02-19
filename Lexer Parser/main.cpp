@@ -29,11 +29,10 @@ extern bool recvFlag;
 extern bool sendFlag;
 
 bool GlobalHalt = false;
+bool LinescanComplete = true;
 
 std::queue<std::string> codes;
 std::string codebuff;
-
-clock_t delay = 0.05 * CLOCKS_PER_SEC;
 
 void getInput();
 void lex();
@@ -65,14 +64,14 @@ int main() {
 
 void getInput() {
 	while (!LexComplete) {
-		std::cout << ">>> ";
-		std::string ibuff;
-		//std::cin >> ibuff;
-		std::getline(std::cin, ibuff);
-		codes.push(ibuff);
-		if (ibuff.find("halt") != std::string::npos) { 
-			GlobalHalt = true;
-			break; 
+		if (GlobalTokenStack.size() == 1) {
+			std::string ibuff;
+			std::getline(std::cin, ibuff);
+			codes.push(ibuff);
+			if (ibuff.find("halt") != std::string::npos) {
+				GlobalHalt = true;
+				break;
+			}
 		}
 	}
 	return;
